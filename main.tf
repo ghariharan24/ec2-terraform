@@ -34,6 +34,6 @@ resource "aws_instance" "jenkins_server" {
               EOF
 
   tags = {
-    Name = var.name_tag,
+    Name = var.name_tag
   }
 }
