@@ -1,4 +1,4 @@
-resource "aws_instance" "public_instance" {
+resource "aws_instance" "jenkins_server" {
   ami           = var.ami
   instance_type = var.instance_type
 
@@ -36,8 +36,4 @@ resource "aws_instance" "public_instance" {
   tags = {
     Name = var.name_tag,
   }
-}
-
-output "jenkins_url" {
-  value = "http://${aws_instance.jenkins_server.public_ip}:8080"
 }
