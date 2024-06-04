@@ -7,14 +7,14 @@ resource "aws_instance" "public_instance" {
   user_data = <<-EOF
               #!/bin/bash
               # Install updates
-              sudo apt-get update
+              sudo apt update
 
               # Install JDK
-              sudo apt-get install openjdk-11-jdk
+              sudo apt install openjdk-11-jdk
 
               # Install Node.js
-              sudo apt-get install -y nodejs
-              sudo install npm
+              sudo apt install nodejs
+              sudo apt install npm
 
               # Install Jenkins
               sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \https://pkg.jenkins.io/debian/jenkins.io-2023.key
@@ -23,7 +23,7 @@ resource "aws_instance" "public_instance" {
               sudo systemctl start jenkins.service
 
               # Additional setup to allow Jenkins to run Docker
-              sudo apt-get install -y docker.io
+              sudo apt install docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
               sudo usermod -aG docker jenkins
