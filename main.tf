@@ -5,29 +5,14 @@ resource "aws_instance" "public_instance" {
   vpc_security_group_ids = [aws_security_group.my_security_group.id]
 
   user_data = <<-EOF
-              #!/bin/bash
-              # Install updates
-              sudo apt-get update
-
-              # Install JDK
-              sudo apt install openjdk-11-jdk -y
-
-              # Install Node.js
-              sudo apt install nodejs -y
-              sudo apt install npm -y
-
-              # Install Jenkins
-              sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \https://pkg.jenkins.io/debian/jenkins.io-2023.key
-              echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \https://pkg.jenkins.io/debian binary/ | sudo tee \/etc/apt/sources.list.d/jenkins.list > /dev/null
-              sudo apt-get install jenkins
-              sudo systemctl start jenkins.service
-
-              # Additional setup to allow Jenkins to run Docker
-              sudo apt install docker.io -y
-              sudo systemctl start docker
-              sudo systemctl enable docker
-              sudo usermod -aG docker jenkins
-              EOF
+              set -ex
+              sudo yum update -y
+              sudo amazon-linux-extras install docker -y
+             sudo service docker start
+             sudo usermod -a -G docker hariharan24docker
+            sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            EOF
 
   tags = {
     Name = var.name_tag
